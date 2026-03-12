@@ -65,6 +65,27 @@ public:
             throw std::out_of_range("index");
         return data_[i];
     }
+    //ФУНКЦИЯ front()
+    T& front()
+    {
+        if(empty())
+            throw std::out_of_range("vector empty");
+
+        return data_[0];
+    }
+    //ФУНКЦИЯ back()
+    T& back()
+    {
+        if(empty())
+            throw std::out_of_range("vector empty");
+
+        return data_[size_ - 1];
+    }
+    //ФУНКЦИЯ data()
+    T* data()
+    {
+        return data_;
+    }
     //ФУНКЦИЯ size()
     size_t size() const
     {
@@ -113,6 +134,21 @@ public:
     void clear()
     {
         size_ = 0;
+    }
+    //ФУНКЦИЯ insert()
+    T* insert(T* pos, const T& value)
+    {
+        size_t index = pos - data_;
+        if(size_ == capacity_)
+        {
+            size_t new_cap = capacity_ == 0 ? 1 : capacity_ * 2;
+            reserve(new_cap);
+        }
+        for(size_t i = size_; i > index; i--)
+            data_[i] = data_[i - 1];
+        data_[index] = value;
+        size_++;
+        return data_ + index;
     }
     //ФУНКЦИИ begin() и end()
     T* begin()
